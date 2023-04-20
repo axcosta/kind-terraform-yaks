@@ -10,17 +10,16 @@ data "kubectl_file_documents" "manifests" {
   content   = each.value.response_body
 }
 resource "kubectl_manifest" "olm_crds_manifests" {
-  for_each  = data.kubectl_file_documents.manifests["crds"].manifests
-  yaml_body = each.value
-  depends_on = [    
+  for_each      = data.kubectl_file_documents.manifests["crds"].manifests
+  yaml_body     = each.value
+  depends_on    = [    
     kind_cluster.lab_k8s_cluster
   ]
 }
 resource "kubectl_manifest" "olm_olm_manifests" {
-  for_each  = data.kubectl_file_documents.manifests["olm"].manifests
-  yaml_body = each.value
-  depends_on = [    
-    kind_cluster.lab_k8s_cluster,
+  for_each      = data.kubectl_file_documents.manifests["olm"].manifests
+  yaml_body     = each.value
+  depends_on    = [        
     kubectl_manifest.olm_crds_manifests
   ]
 }
@@ -39,7 +38,18 @@ resource "kubectl_manifest" "yaks_operator_subscription" {
     }
   )
   depends_on = [
-    kubectl_manifest.olm_olm_manifests,
-    kind_cluster.lab_k8s_cluster
+    kubectl_manifest.olm_olm_manifests    
+  ]
+}
+resource "kubectl_manifest" "yaks_instance" {
+  yaml_body = templatefile(var.apps.yaks.instance.yaml_path, 
+    {
+      instance_name             = var.apps["yaks"].instance.name
+      instance_namespace        = var.apps["yaks"].instance.namespace
+      instance_operator_global  = var.apps["yaks"].instance.operator.global
+    }
+  )
+  depends_on = [
+    kubectl_manifest.yaks_operator_subscription
   ]
 }

@@ -2,8 +2,9 @@ apiVersion: yaks.citrusframework.org/v1alpha1
 kind: Instance
 metadata:
   labels:
-    app: yaks
-  name: example-instance
+    app: ${instance_name}
+  name: ${instance_name}
+  namespace: ${instance_namespace}
 spec:
   operator:
-    global: true
+    global: ${instance_operator_global}

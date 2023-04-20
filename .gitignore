@@ -35,3 +35,4 @@ terraform.rc
 
 # Other custom files
 kindcluster-config*
+**/_output/*

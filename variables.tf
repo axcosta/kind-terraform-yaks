@@ -20,6 +20,15 @@ variable "apps" {
                     }                    
                 }
             }
+            instance    = {
+                yaml_path   = "apps/yaks/instance.yaml"
+                name = "yaks"
+                namespace = "operators"
+                operator = {
+                    global = false
+                    namespace = "operators"
+                }
+            }
         }
     }   
 }
