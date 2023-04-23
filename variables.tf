@@ -1,9 +1,11 @@
 variable "terraform_managed_by_label" {
+    description = "Content of label to be put throughout all resources created in cluster"
     default = {
         "app.kubernetes.io/managed-by" = "terraform" 
     }
 }
 variable "kubernetes_resources" {
+    description = "Type of resources created in cluster that will be labeled"
     default = {
         subscription = {
             api_version = "operators.coreos.com/v1alpha1"
@@ -16,6 +18,7 @@ variable "kubernetes_resources" {
     }
 }
 variable "cluster" {
+    description = "Information to configure the K8s Cluster"
     default = {
         name        = "kind-lab-k8s-cluster"
         node_image  = "kindest/node:v1.24.0"
@@ -23,6 +26,7 @@ variable "cluster" {
     }
 }
 variable "apps" {
+    description = "Information to configure applications in K8s Cluster"
     default = {
         olm     = {
             yamls = {
@@ -33,7 +37,7 @@ variable "apps" {
         yaks    = {
             subscription = {
                 yaml_path       = "apps/yaks/subscription.yaml"
-                name            = "yaks-poc"
+                name            = "yaks-lab"
                 namespace       = "operators"
                 channel         = "alpha"
                 operator        = {
