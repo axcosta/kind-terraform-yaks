@@ -34,5 +34,5 @@ override.tf.json
 terraform.rc
 
 # Other custom files
-kindcluster-config*
+kind*
 **/_output/*

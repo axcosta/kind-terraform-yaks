@@ -1,10 +1,10 @@
 apiVersion: yaks.citrusframework.org/v1alpha1
 kind: Instance
 metadata:
-  labels:
-    app: ${instance_name}
   name: ${instance_name}
   namespace: ${instance_namespace}
+  labels:
+    app: ${instance_name}    
 spec:
   operator:
     global: ${instance_operator_global}
